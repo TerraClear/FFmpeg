@@ -1098,6 +1098,12 @@ typedef struct RcOverride{
  */
 #define AV_CODEC_CAP_LOSSLESS         0x80000000
 
+/**
+ * Codec is backed by a hardware implementation. Typically used to
+ * identify a non-hwaccel hardware decoder. For information about hwaccels, use
+ * avcodec_get_hw_config() instead.
+ */
+#define AV_CODEC_CAP_HARDWARE            (1 << 18)
 
 #if FF_API_WITHOUT_PREFIX
 /**
