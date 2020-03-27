@@ -321,6 +321,7 @@ External library support:
   --disable-vda            disable Apple Video Decode Acceleration code [autodetect]
   --disable-vdpau          disable Nvidia Video Decode and Presentation API for Unix code [autodetect]
   --disable-videotoolbox   disable VideoToolbox code [autodetect]
+  --enable-nvmpi           enable nvmpi code
 
 Toolchain options:
   --arch=ARCH              select architecture [$arch]
@@ -1667,6 +1668,7 @@ HWACCEL_LIBRARY_LIST="
     libmfx
     mmal
     omx
+    nvmpi
 "
 
 DOCUMENT_LIST="
@@ -2805,6 +2807,7 @@ h264_mediacodec_decoder_deps="mediacodec"
 h264_mediacodec_decoder_select="h264_mp4toannexb_bsf h264_parser"
 h264_mmal_decoder_deps="mmal"
 h264_nvenc_encoder_deps="nvenc"
+h264_nvmpi_encoder_deps="nvmpi"
 h264_omx_encoder_deps="omx"
 h264_qsv_decoder_deps="libmfx"
 h264_qsv_decoder_select="h264_mp4toannexb_bsf h264_parser qsvdec h264_qsv_hwaccel"
@@ -2812,6 +2815,8 @@ h264_qsv_encoder_deps="libmfx"
 h264_qsv_encoder_select="qsvenc"
 h264_rkmpp_decoder_deps="rkmpp"
 h264_rkmpp_decoder_select="h264_mp4toannexb_bsf"
+h264_nvmpi_decoder_deps="nvmpi"
+h264_nvmpi_decoder_select="h264_mp4toannexb_bsf"
 h264_vaapi_encoder_deps="VAEncPictureParameterBufferH264"
 h264_vaapi_encoder_select="vaapi_encode golomb"
 h264_vda_decoder_deps="vda"
@@ -2825,12 +2830,15 @@ hevc_cuvid_decoder_select="hevc_mp4toannexb_bsf"
 hevc_mediacodec_decoder_deps="mediacodec"
 hevc_mediacodec_decoder_select="hevc_mp4toannexb_bsf hevc_parser"
 hevc_nvenc_encoder_deps="nvenc"
+hevc_nvmpi_encoder_deps="nvmpi"
 hevc_qsv_decoder_deps="libmfx"
 hevc_qsv_decoder_select="hevc_mp4toannexb_bsf hevc_parser qsvdec hevc_qsv_hwaccel"
 hevc_qsv_encoder_deps="libmfx"
 hevc_qsv_encoder_select="hevcparse qsvenc"
 hevc_rkmpp_decoder_deps="rkmpp"
 hevc_rkmpp_decoder_select="hevc_mp4toannexb_bsf"
+hevc_nvmpi_decoder_deps="nvmpi"
+hevc_nvmpi_decoder_select="hevc_mp4toannexb_bsf"
 hevc_vaapi_encoder_deps="VAEncPictureParameterBufferHEVC"
 hevc_vaapi_encoder_select="vaapi_encode golomb"
 hevc_v4l2m2m_decoder_deps="v4l2_m2m hevc_v4l2_m2m"
@@ -2844,6 +2852,7 @@ mpeg1_vdpau_decoder_select="mpeg1video_decoder"
 mpeg1_v4l2m2m_decoder_deps="v4l2_m2m mpeg1_v4l2_m2m"
 mpeg2_crystalhd_decoder_select="crystalhd"
 mpeg2_cuvid_decoder_deps="cuda cuvid"
+mpeg2_nvmpi_decoder_deps="nvmpi"
 mpeg2_mmal_decoder_deps="mmal"
 mpeg2_mediacodec_decoder_deps="mediacodec"
 mpeg2_qsv_decoder_deps="libmfx"
@@ -2855,6 +2864,7 @@ mpeg2_vaapi_encoder_select="vaapi_encode"
 mpeg2_v4l2m2m_decoder_deps="v4l2_m2m mpeg2_v4l2_m2m"
 mpeg4_crystalhd_decoder_select="crystalhd"
 mpeg4_cuvid_decoder_deps="cuda cuvid"
+mpeg4_nvmpi_decoder_deps="nvmpi"
 mpeg4_mediacodec_decoder_deps="mediacodec"
 mpeg4_mmal_decoder_deps="mmal"
 mpeg4_omx_encoder_deps="omx"
@@ -2874,6 +2884,7 @@ vc1_vdpau_decoder_deps="vdpau"
 vc1_vdpau_decoder_select="vc1_decoder"
 vc1_v4l2m2m_decoder_deps="v4l2_m2m vc1_v4l2_m2m"
 vp8_cuvid_decoder_deps="cuda cuvid"
+vp8_nvmpi_decoder_deps="nvmpi"
 vp8_mediacodec_decoder_deps="mediacodec"
 vp8_qsv_decoder_deps="libmfx"
 vp8_qsv_decoder_select="qsvdec vp8_qsv_hwaccel vp8_parser"
@@ -2883,6 +2894,7 @@ vp8_vaapi_encoder_select="vaapi_encode"
 vp8_v4l2m2m_decoder_deps="v4l2_m2m vp8_v4l2_m2m"
 vp8_v4l2m2m_encoder_deps="v4l2_m2m vp8_v4l2_m2m"
 vp9_cuvid_decoder_deps="cuda cuvid"
+vp9_nvmpi_decoder_deps="nvmpi"
 vp9_mediacodec_decoder_deps="mediacodec"
 vp9_rkmpp_decoder_deps="rkmpp"
 vp9_vaapi_encoder_deps="VAEncPictureParameterBufferVP9"
@@ -6085,6 +6097,7 @@ enabled rkmpp             && { { require_pkg_config rockchip_mpp rockchip_mpp ro
                                { enabled libdrm ||
                                  die "ERROR: rkmpp requires --enable-libdrm"; }
                              }
+enabled nvmpi            && require_pkg_config nvmpi nvmpi nvmpi.h nvmpi_create_decoder
 
 if enabled gcrypt; then
     GCRYPT_CONFIG="${cross_prefix}libgcrypt-config"
