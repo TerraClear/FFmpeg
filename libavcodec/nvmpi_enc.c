@@ -265,7 +265,6 @@ static const AVOption options[] = {
 		.pix_fmts       = (const enum AVPixelFormat[]) { AV_PIX_FMT_YUV420P, AV_PIX_FMT_NONE },\
 		.capabilities   = AV_CODEC_CAP_HARDWARE | AV_CODEC_CAP_DELAY, \
 		.defaults       = defaults,\
-		.wrapper_name   = "nvmpi", \
 	};
 
 NVMPI_ENC(h264, "H.264", AV_CODEC_ID_H264);
