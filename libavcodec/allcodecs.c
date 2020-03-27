@@ -221,7 +221,7 @@ static void register_all(void)
     REGISTER_ENCODER(H264_NVMPI,        h264_nvmpi);
     REGISTER_DECODER(HEVC_NVMPI,        hevc_nvmpi);
     REGISTER_ENCODER(HEVC_NVMPI,        hevc_nvmpi);
-    REGISTER_DECODER(MPEG2_NVMPI,       mpeg4_nvmpi);
+    REGISTER_DECODER(MPEG2_NVMPI,       mpeg2_nvmpi);
     REGISTER_DECODER(MPEG4_NVMPI,       mpeg4_nvmpi);
     REGISTER_DECODER(VP8_NVMPI,         vp8_nvmpi);
     REGISTER_DECODER(VP9_NVMPI,         vp9_nvmpi);
